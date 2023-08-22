@@ -1,0 +1,8 @@
+displayName = 泰拉方舟
+author = AstralPrisma
+version = 0.1.14.514
+hideCode = true
+hideResources = true
+includeSource = false
+buildIgnore = obj\*, bin\*, .vs\*
+includePDB = false
