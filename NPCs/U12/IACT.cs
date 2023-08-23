@@ -18,6 +18,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.DataStructures;
 using Arknights.BossBars;
+using Arknights.NPCs.U12;
+using System.Threading;
 
 namespace Arknights.NPCs.U12
 {
@@ -172,7 +174,7 @@ namespace Arknights.NPCs.U12
 		//NPC贴图黑暗高亮发光效果+光环效果
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)//贴图，位置，大小区域，光亮颜色，转动角度，中心点坐标，缩放倍率，特殊效果(翻转)，图层
 		{
-			if(crushed != true)//锁血后高亮消失
+			if(IACTcrashed != true)//锁血后高亮消失
 			{
 				Texture2D maskTexture = ModContent.Request<Texture2D>("Arknights/NPCs/U12/IACTMask").Value;//常驻高亮部分
 				Main.EntitySpriteDraw(maskTexture, NPC.Center - Main.screenPosition + new Vector2(0,3), new Rectangle(0, 0, maskTexture.Width, maskTexture.Height), Color.White, NPC.rotation, new Vector2(maskTexture.Width / 2, maskTexture.Height / 2), 1f, SpriteEffects.None, 0);
@@ -414,7 +416,7 @@ namespace Arknights.NPCs.U12
 				Texture2D InringTexture4 = ModContent.Request<Texture2D>("Arknights/NPCs/U12/IAR").Value;
 				Texture2D waveTexture = ModContent.Request<Texture2D>("Arknights/NPCs/U12/IACTLightwave").Value;
 
-				if(crushed != true)//探照灯之一
+				if(IACTcrashed != true)//探照灯之一
 				{
 					IACTLightScale3 = (float)(0.5f*Math.Sin(Math.PI*LightScale3/90f - Math.PI/2f)+0.5f);//灯光晕影大小变化,相位0（180）
 					Main.EntitySpriteDraw(waveTexture, NPC.Center - Main.screenPosition + new Vector2(0,25), new Rectangle(0, 0, waveTexture.Width, waveTexture.Height), Color.Red, NPC.rotation, new Vector2(waveTexture.Width / 2, 0), IACTLightScale3, SpriteEffects.None, 0);
@@ -437,7 +439,7 @@ namespace Arknights.NPCs.U12
 				}
 				else//确实进入了三阶段（1/3秒后）
 				{
-					if(crushed != true)//坠毁之前
+					if(IACTcrashed != true)//坠毁之前
 					{
 						IARSScale8 = (float)(0.25f*Math.Sin(Math.PI*IAORScaleY/120f + 4 * Math.PI/3f)+0.25f);
 						Main.EntitySpriteDraw(InringTexture3, NPC.Center - Main.screenPosition + new Vector2(0, 3), new Rectangle(0, 0, InringTexture3.Width, InringTexture3.Height), Color.White, (float)(0 * NPC.rotation), new Vector2(InringTexture3.Width / 2, InringTexture3.Height / 2), IARSScale8, SpriteEffects.None, 0);   
@@ -466,7 +468,7 @@ namespace Arknights.NPCs.U12
 				}
 				else//确实进入了三阶段（1秒后）
 				{
-					if(crushed != true)//坠毁前
+					if(IACTcrashed != true)//坠毁前
 					{
 						OARScale = (float)(0.0625f*Math.Sin(Math.PI*OARScaleX/60f + Math.PI/2f)+0.9375f);//外环缩放,周期2秒，在1~0.875倍之间变化
 						IARSScale0 = (float)(0.25f*Math.Sin(Math.PI*IAORScaleY/120f)+0.25f);//多内环缩放,周期4秒，在0~0.5倍之间变化
@@ -503,7 +505,7 @@ namespace Arknights.NPCs.U12
 
 				if(stage3timer >=100)
 				{
-					if(crushed != true)
+					if(IACTcrashed != true)
 					{
 						IARSScale4 = (float)(0.25f*Math.Sin(Math.PI*IAORScaleY/120f + 2 * Math.PI/3f)+0.25f);
 						Main.EntitySpriteDraw(InringTexture3, NPC.Center - Main.screenPosition + new Vector2(0, 3), new Rectangle(0, 0, InringTexture3.Width, InringTexture3.Height), Color.White, (float)(0 * NPC.rotation), new Vector2(InringTexture3.Width / 2, InringTexture3.Height / 2), IARSScale4, SpriteEffects.None, 0);		
@@ -529,7 +531,7 @@ namespace Arknights.NPCs.U12
 				}
 				else//确实进入了三阶段（2秒后）
 				{
-					if(crushed != true)//坠毁前
+					if(IACTcrashed != true)//坠毁前
 					{
 						IARScale1 = (float)(0.13f*Math.Sin(Math.PI*IARScaleX/240f)+0.6f);
 						IARScale5 = (float)(0.13f*Math.Sin(Math.PI*IARScaleX/240f + Math.PI)+0.6f);
@@ -562,7 +564,7 @@ namespace Arknights.NPCs.U12
 				}
 				else//确实进入了三阶段（7/3秒后）
 				{
-					if(crushed != true)//坠毁之前
+					if(IACTcrashed != true)//坠毁之前
 					{
 						IARSScale2 = (float)(0.25f*Math.Sin(Math.PI*IAORScaleY/120f + Math.PI/3f)+0.25f);
 						Main.EntitySpriteDraw(InringTexture3, NPC.Center - Main.screenPosition + new Vector2(0, 3), new Rectangle(0, 0, InringTexture3.Width, InringTexture3.Height), Color.White, (float)(0 * NPC.rotation), new Vector2(InringTexture3.Width / 2, InringTexture3.Height / 2), IARSScale2, SpriteEffects.None, 0);   
@@ -588,7 +590,7 @@ namespace Arknights.NPCs.U12
 				}
 				else//确实进入了三阶段（4秒后）
 				{
-					if(crushed != true)//坠毁前
+					if(IACTcrashed != true)//坠毁前
 					{
 						IARScale3 = (float)(0.13f*Math.Sin(Math.PI*IARScaleX/240f + Math.PI/2f)+0.6f);
 						IARScale7 = (float)(0.13f*Math.Sin(Math.PI*IARScaleX/240f + 3 * Math.PI/2f)+0.6f);
@@ -642,7 +644,7 @@ namespace Arknights.NPCs.U12
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)//击落后隐藏下方血条
         {
 			scale = 1.5f;
-			if(crushed == true)
+			if(IACTcrashed == true)
 			{
 				position += new Vector2(0, 10000);
 				return true;
@@ -708,11 +710,24 @@ namespace Arknights.NPCs.U12
 		private float stage2to3r;
 		private float stage2to3atkspeed;
 		private float stage2to3locktime;
-		private bool crushed = false;//是否坠毁？
+		private bool IACTcrashed = false;//是否坠毁？
 		private float endtimer;
 		private float endexplodespeed;
-		
-		public override void AI()
+		private int stage3atkloop;
+        private int stage3dashtime;
+        private int stage3explodetime;
+        private int stage3targettime;
+		private int IACTtage3timer;
+		private bool NormalMove = false;
+		private float diffX;
+		private float diffY;
+
+        public static int MinionType()
+        {
+            return ModContent.NPCType<IACTStage3target>();
+        }
+
+        public override void AI()
 		{
 			//动态转角
 			NPC.rotation = 0.01f*(float)NPC.velocity.X;
@@ -773,7 +788,7 @@ namespace Arknights.NPCs.U12
 				}
 			}
 
-			if(crushed != true)//拖尾特效，坠毁时就没有了
+			if(IACTcrashed != true)//拖尾特效，坠毁时就没有了
 			{
 				if(ontransform != true)//常态
 				{
@@ -844,7 +859,7 @@ namespace Arknights.NPCs.U12
 			}
 
 			//主体AI
-			if(NPC.life > 1 && NPC.dontTakeDamage != true && stage != 3)//一二阶段
+			if(NPC.life > 1 && NPC.dontTakeDamage != true)//一二阶段和三阶段的部分移动
 			{
 				//2阶段之后的玩家判定区
 				if(truestage2 == 1 && timer1 >= playerprefire)
@@ -855,19 +870,19 @@ namespace Arknights.NPCs.U12
 				}
 
 				//固定判定区，3秒一个
-				if(timer2 >= 180)
-				{	
+				if (timer2 >= 180)
+				{
 					timer2 = 0;
-					if(NPC.life < NPC.lifeMax * expertHealthFrac)//第二阶段
+					SoundEngine.PlaySound(new SoundStyle("Arknights/Sounds/AlertPro") with { Volume = 1f, Pitch = 0f }, NPC.Center);
+					if (NPC.life < NPC.lifeMax * expertHealthFrac)//第二阶段
 					{
-						Projectile.NewProjectile(newSource,NPC.position.X + 82, NPC.position.Y + 43, 0, 0, ModContent.ProjectileType<AuraredPro>(),(int)(NPC.damage * 0.33), 0f, 0, 0);
-						Projectile.NewProjectile(newSource,NPC.position.X + 82, NPC.position.Y + 43, 0, 0, ModContent.ProjectileType<HitboxgreenPro>(),NPC.damage, 0f, 0, 0);
+						Projectile.NewProjectile(newSource, NPC.position.X + 82, NPC.position.Y + 43, 0, 0, ModContent.ProjectileType<AuraredPro>(), (int)(NPC.damage * 0.33), 0f, 0, 0);
+						Projectile.NewProjectile(newSource, NPC.position.X + 82, NPC.position.Y + 43, 0, 0, ModContent.ProjectileType<HitboxgreenPro>(), NPC.damage, 0f, 0, 0);
 					}
 					else//第一阶段
 					{
-						SoundEngine.PlaySound(new SoundStyle("Arknights/Sounds/AlertPro") with { Volume = 1f, Pitch = 0f }, NPC.Center);
-						Projectile.NewProjectile(newSource,NPC.position.X + 82, NPC.position.Y + 43, 0, 0, ModContent.ProjectileType<AuragreenPro>(),(int)(NPC.damage * 0.1), 0f, 0,0);
-						Projectile.NewProjectile(newSource,NPC.position.X + 82, NPC.position.Y + 43, 0, 0, ModContent.ProjectileType<Hitboxgreen>(),NPC.damage, 0f, 0, 0);
+						Projectile.NewProjectile(newSource, NPC.position.X + 82, NPC.position.Y + 43, 0, 0, ModContent.ProjectileType<AuragreenPro>(), (int)(NPC.damage * 0.1), 0f, 0, 0);
+						Projectile.NewProjectile(newSource, NPC.position.X + 82, NPC.position.Y + 43, 0, 0, ModContent.ProjectileType<Hitboxgreen>(), NPC.damage, 0f, 0, 0);
 					}
 				}
 
@@ -879,38 +894,125 @@ namespace Arknights.NPCs.U12
 				int haltDirectionY = velDiff.Y > 0 ? 1 : -1;
 				float haltPointX = NPC.Center.X + haltDirectionX * (velDiff.X * velDiff.X) / (2 * ax);	
 				float haltPointY = NPC.Center.Y + haltDirectionY * (velDiff.Y * velDiff.Y) / (2 * ay);
-				//基础移动速度设置
-				if(Main.masterMode)
+                diffX = Player.Center.X - NPC.Center.X;
+                diffY = Player.Center.Y - NPC.Center.Y;
+
+				if (Math.Sqrt(Math.Pow(diffX, 2) + Math.Pow(diffY, 2)) >= 75 * 16)//距离远于75格
 				{
-					if(stage == 2)
-					{
-						vx = 8f;vy = 8f;
-					}
-					if(stage == 1)
-					{
-						vx = 6f;vy = 6f;
-					}
-				}
-				else if(Main.expertMode)
+					ax = 0.6f;
+					ax = 0.4f;
+                    if (Main.masterMode)
+                    {
+                        if (stage == 3 && NormalMove == true)
+                        {
+                            vx = 20f;
+                            vy = 20f;
+                        }
+                        if (stage == 2)
+                        {
+                            vx = 16f;
+                            vy = 16f;
+                        }
+                        if (stage == 1)
+                        {
+                            vx = 12f;
+                            vy = 12f;
+                        }
+                    }
+                    else if (Main.expertMode)
+                    {
+                        if (stage == 3 && NormalMove == true)
+                        {
+                            vx = 18f;
+                            vy = 16f;
+                        }
+                        if (stage == 2)
+                        {
+                            vx = 14f;
+                            vy = 14f;
+                        }
+                        if (stage == 1)
+                        {
+                            vx = 12f;
+                            vy = 10f;
+                        }
+                    }
+                    else
+                    {
+                        if (stage == 3 && NormalMove == true)
+                        {
+                            vx = 16f;
+                            vy = 14f;
+                        }
+                        if (stage == 2)
+                        {
+                            vx = 12f;
+                            vy = 12f;
+                        }
+                        if (stage == 1)
+                        {
+                            vx = 10f;
+                            vy = 8f;
+                        }
+                    }
+                }
+                else//基础移动速度设置
 				{
-					if(stage == 2)
+					ax = 0.3f;
+					ax = 0.2f;
+					if (Main.masterMode)
 					{
-						vx = 7f;vy = 7f;
+						if (stage == 3 && NormalMove == true)
+						{
+							vx = 8f;
+							vy = 8f;
+						}
+						if (stage == 2)
+						{
+							vx = 8f;
+							vy = 8f;
+						}
+						if (stage == 1)
+						{
+							vx = 6f;
+							vy = 6f;
+						}
 					}
-					if(stage == 1)
+					else if (Main.expertMode)
 					{
-						vx = 6f;vy = 5f;
+						if (stage == 3 && NormalMove == true)
+						{
+							vx = 8f;
+							vy = 8f;
+						}
+						if (stage == 2)
+						{
+							vx = 7f;
+							vy = 7f;
+						}
+						if (stage == 1)
+						{
+							vx = 6f;
+							vy = 5f;
+						}
 					}
-				}
-				else
-				{
-					if(stage == 2)
+					else
 					{
-						vx = 6f;vy = 6f;
-					}
-					if(stage == 1)
-					{
-						vx = 5f;vy = 4f;
+						if (stage == 3 && NormalMove == true)
+						{
+							vx = 8f;
+							vy = 7f;
+						}
+						if (stage == 2)
+						{
+							vx = 6f;
+							vy = 6f;
+						}
+						if (stage == 1)
+						{
+							vx = 5f;
+							vy = 4f;
+						}
 					}
 				}
 
@@ -926,7 +1028,7 @@ namespace Arknights.NPCs.U12
 
 				if (Player.Center.Y > haltPointY)
 				{
-					NPC.velocity.Y += ay;
+				NPC.velocity.Y += ay;
 				}
 				else
 				{
@@ -1116,10 +1218,49 @@ namespace Arknights.NPCs.U12
 				}
 			}
 
-			if(stage == 3)
+			if(stage == 3)//第三阶段
 			{
-				NPC.velocity = Vector2.Lerp(NPC.velocity,Vector2.Zero,0.01f);
-				stage3timer++;
+                if (Main.masterMode)
+                {
+					stage3dashtime = 180;
+					stage3explodetime = 120;
+					stage3targettime = 120;
+                }
+                else if (Main.expertMode)
+                {
+                    stage3dashtime = 240;
+                    stage3explodetime = 150;
+                    stage3targettime = 150;
+                }
+                else
+                {
+                    stage3dashtime = 300;
+                    stage3explodetime = 180;
+                    stage3targettime = 180;
+                }
+                stage3atkloop = stage3dashtime + stage3explodetime + stage3targettime;//先这样写，不确定周期长度，回头再调
+                var entitySource = NPC.GetSource_FromAI();
+                
+                NPC.velocity = Vector2.Lerp(NPC.velocity,Vector2.Zero,0.01f);
+                if (truestage3 == 1)//开启定点系统
+				{
+                    NPC minionNPC = Main.npc[NPC.NewNPC(entitySource, (int)(2*Player.Center.X - NPC.Center.X), (int)(2 * Player.Center.Y - NPC.Center.Y), ModContent.NPCType<IACTStage3target>(), NPC.whoAmI)];
+                    if (minionNPC.ModNPC is IACTStage3target minion)
+                    {
+                        minion.ParentIndex = NPC.whoAmI;
+                    }
+					truestage3 = 2;
+                }
+                if (stage3timer - stage2to3locktime >= 0 && truestage3 == 2)
+				{
+                    IACTtage3timer++;
+					if(IACTtage3timer <= stage3targettime)//定位区段：IACT像第1阶段和第2阶段一样移动，但速度更快；目标平滑出现，保持高亮并解锁状态
+                    {
+						NormalMove = true;
+					}
+				}
+                stage3timer++;
+
 			}
 
 			if(NPC.life <= 1)//坠毁及其保护机制
@@ -1167,7 +1308,7 @@ namespace Arknights.NPCs.U12
                     }
 					else if (endtimer >= 480)
 					{
-						crushed = true;
+						IACTcrashed = true;
 						NPC.noTileCollide = false;//与物块相撞	
 						deathtimer++;
 						if(deathtimer >= 180)//下坠3秒后爆炸并触发爆炸粒子
@@ -1264,7 +1405,516 @@ namespace Arknights.NPCs.U12
 		}
 	}
 
-	public class AuragreenPro : ModProjectile
+	public class IACTStage3target : ModNPC
+	{
+        private const string ChainTextPath = "Arknights/NPCs/U12/IACTStage3target";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "");
+            Main.npcFrameCount[NPC.type] = 1;//贴图帧数
+        }
+
+        public override void SetDefaults()
+        {
+            NPC.lifeMax = 1;
+            NPC.damage = 0;
+            NPC.defense = 0;
+            NPC.knockBackResist = 0f;//击退抗性，0f为最高，1f为最低
+            NPC.width = 1;
+            NPC.height = 1;
+            NPC.noGravity = true;//无引力
+            NPC.noTileCollide = true;//不与物块相撞
+            NPC.lavaImmune = true;//免疫岩浆
+            NPC.aiStyle = -1;
+            NPC.HitSound = SoundID.NPCHit4;//金属声
+            NPC.DeathSound = SoundID.NPCDeath14;//爆炸声
+        }
+
+        public int ParentIndex
+        {
+            get => (int)NPC.ai[0] - 1;
+            set => NPC.ai[0] = value + 1;
+        }
+
+        public static int BodyType()
+        {
+            return ModContent.NPCType<IACT>();
+        }
+
+		private int timer;
+		private int stage3atkloop;
+
+        public override void AI()
+        {
+            var newSource = NPC.GetSource_FromThis();
+            
+			if(Main.masterMode)
+			{
+				stage3atkloop = 420;
+			}
+            else if (Main.expertMode)
+            {
+                stage3atkloop = 540;
+            }
+            else
+            {
+                stage3atkloop = 660;
+            }
+            if (timer % stage3atkloop == 0)
+			{
+                Projectile.NewProjectile(newSource, NPC.Center.X, NPC.Center.Y, 0, 0, ModContent.ProjectileType<ISTG3InCore>(), 0, 0f, 0, NPC.whoAmI);
+                Projectile.NewProjectile(newSource, NPC.Center.X, NPC.Center.Y, 0, 0, ModContent.ProjectileType<ISTG3InRing>(), 0, 0f, 0, NPC.whoAmI);
+                Projectile.NewProjectile(newSource, NPC.Center.X, NPC.Center.Y, 0, 0, ModContent.ProjectileType<ISTG3OutPrism>(), 0, 0f, 0, NPC.whoAmI);
+                Projectile.NewProjectile(newSource, NPC.Center.X, NPC.Center.Y, 0, 0, ModContent.ProjectileType<ISTG3OutRing>(), 0, 0f, 0, NPC.whoAmI);
+            }
+			timer++;
+            Player Player = Main.player[Main.myPlayer];
+            NPC parentNPC = Main.npc[ParentIndex];
+            NPC.dontTakeDamage = true;
+			NPC.Center = 2 * Player.Center - parentNPC.Center;
+			if(parentNPC.life == 1 || parentNPC.active == false)
+			{
+				die();
+			}
+        }
+
+		private int killtimer;
+
+        private void die()
+        {
+			killtimer++;
+			NPC.alpha = 4 * killtimer;
+			if(NPC.alpha > 255)
+			{
+				NPC.alpha = 255;
+			}
+			NPC.scale = 1 - killtimer / 60;
+			if(NPC.scale < 0)
+			{
+				NPC.scale = 0;
+			}
+			if(killtimer >= 120)
+			{
+				NPC.dontTakeDamage = false;
+				NPC.life = 0;
+			}
+        }
+    }
+
+	public class ISTG3InCore : ModProjectile
+	{
+		private const string ChainTextPath = "Arknights/NPCs/U12/ISTG3InCore";
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("IACTSTG3TGT");
+			DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "IACT三阶段瞄准目标");//翻译
+		}
+
+		public override void SetDefaults()
+		{
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.aiStyle = 0;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			if (Main.masterMode)
+			{
+				Projectile.timeLeft = 360;
+			}
+			else if (Main.expertMode)
+			{
+				Projectile.timeLeft = 450;
+			}
+			else
+			{
+				Projectile.timeLeft = 540;
+			}
+			Projectile.alpha = 10;
+			Projectile.damage = 0;
+			Projectile.light = 0.6f;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.scale = 1f;
+		}
+
+		private int timer;
+
+        public int ParentIndex
+        {
+            get => (int)Projectile.ai[0] - 1;
+            set => Projectile.ai[0] = value + 1;
+        }
+
+        public override void AI()
+		{
+			timer++;
+            Player Player = Main.player[Main.myPlayer];
+            NPC parentNPC = Main.npc[ParentIndex];
+			Projectile.Center = 2 * Player.Center - parentNPC.Center;
+            if (Main.masterMode)
+            {
+                Projectile.alpha = (int)(Math.Pow(timer,2)/60 - timer*6 +255);
+				if((timer >=0 && timer <=60)||(timer >= 300 && timer <= 360))
+				{
+                    Projectile.scale = (float)Math.Sin(timer*Math.PI / 120);
+                }
+				else
+				{
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 60 - Math.PI / 2) + 0.9f;
+                }
+            }
+            else if (Main.expertMode)
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 75 - timer * 6 + 255);
+                if (timer >= 0 && timer <= 60)
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120);
+                }
+                else if (timer >= 60 && timer <= 390)
+                {
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 70 - 5 * Math.PI / 14) + 0.9f;
+                }
+				else 
+				{
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120 + Math.PI / 2);
+                }
+            }
+            else
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 90 - timer * 6 + 255);
+                if (timer >= 0 && timer <= 60)
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120);
+                }
+                else if (timer >= 60 && timer <= 480)
+                {
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 70 - 5 * Math.PI / 14) + 0.9f;
+                }
+                else
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120 - 3 * Math.PI / 4);
+                }
+            }
+			if(Projectile.alpha < 0)
+			{
+				Projectile.alpha = 0;
+			}
+        }
+	}
+
+    public class ISTG3InRing : ModProjectile
+    {
+        private const string ChainTextPath = "Arknights/NPCs/U12/ISTG3InRing";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("IACTSTG3TGT");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "IACT三阶段瞄准目标");//翻译
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 52;
+            Projectile.height = 52;
+            Projectile.aiStyle = 0;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            if (Main.masterMode)
+            {
+                Projectile.timeLeft = 360;
+            }
+            else if (Main.expertMode)
+            {
+                Projectile.timeLeft = 450;
+            }
+            else
+            {
+                Projectile.timeLeft = 540;
+            }
+            Projectile.alpha = 10;
+            Projectile.damage = 0;
+            Projectile.light = 0.6f;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.scale = 1f;
+        }
+
+        private int timer;
+
+        public int ParentIndex
+        {
+            get => (int)Projectile.ai[0] - 1;
+            set => Projectile.ai[0] = value + 1;
+        }
+
+        public override void AI()
+        {
+            timer++;
+            Player Player = Main.player[Main.myPlayer];
+            NPC parentNPC = Main.npc[ParentIndex];
+            Projectile.Center = 2 * Player.Center - parentNPC.Center;
+            Projectile.rotation = -0.05f*timer;
+            if (Main.masterMode)
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 60 - timer * 6 + 255);
+                if ((timer >= 0 && timer <= 60) || (timer >= 300 && timer <= 360))
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120);
+                }
+                else
+                {
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 60 - Math.PI / 2) + 0.9f;
+                }
+            }
+            else if (Main.expertMode)
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 75 - timer * 6 + 255);
+                if (timer >= 0 && timer <= 60)
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120);
+                }
+                else if (timer >= 60 && timer <= 390)
+                {
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 70 - 5 * Math.PI / 14) + 1f;
+                }
+                else
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120 + Math.PI / 2);
+                }
+            }
+            else
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 90 - timer * 6 + 255);
+                if (timer >= 0 && timer <= 60)
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120);
+                }
+                else if (timer >= 60 && timer <= 480)
+                {
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 70 - 5 * Math.PI / 14) + 0.9f;
+                }
+                else
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120 - 3 * Math.PI / 4);
+                }
+            }
+            if (Projectile.alpha < 0)
+            {
+                Projectile.alpha = 0;
+            }
+        }
+    }
+
+    public class ISTG3OutRing : ModProjectile
+    {
+        private const string ChainTextPath = "Arknights/NPCs/U12/ISTG3OutRing";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("IACTSTG3TGT");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "IACT三阶段瞄准目标");//翻译
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 166;
+            Projectile.height = 166;
+            Projectile.aiStyle = 0;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            if (Main.masterMode)
+            {
+                Projectile.timeLeft = 360;
+            }
+            else if (Main.expertMode)
+            {
+                Projectile.timeLeft = 450;
+            }
+            else
+            {
+                Projectile.timeLeft = 540;
+            }
+            Projectile.alpha = 10;
+            Projectile.damage = 0;
+            Projectile.light = 0.6f;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.scale = 1f;
+        }
+
+        private int timer;
+
+        public int ParentIndex
+        {
+            get => (int)Projectile.ai[0] - 1;
+            set => Projectile.ai[0] = value + 1;
+        }
+
+        public override void AI()
+        {
+            timer++;
+			Player Player = Main.player[Main.myPlayer];
+            NPC parentNPC = Main.npc[ParentIndex];
+
+            Projectile.Center = 2 * Player.Center - parentNPC.Center;
+            Projectile.rotation = 0.05f * timer;
+            if (Main.masterMode)
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 60 - timer * 6 + 255);
+                if ((timer >= 0 && timer <= 60) || (timer >= 300 && timer <= 360))
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120);
+                }
+                else
+                {
+                    Projectile.scale = 1f;
+                }
+            }
+            else if (Main.expertMode)
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 75 - timer * 6 + 255);
+                if (timer >= 0 && timer <= 60)
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120);
+                }
+                else if (timer >= 60 && timer <= 390)
+                {
+                    Projectile.scale = 1f;
+                }
+                else
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120 + Math.PI / 2);
+                }
+            }
+            else
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 90 - timer * 6 + 255);
+                if (timer >= 0 && timer <= 60)
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120);
+                }
+                else if (timer >= 60 && timer <= 480)
+                {
+                    Projectile.scale = 1f;
+                }
+                else
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120 - 3 * Math.PI / 4);
+                }
+            }
+            if (Projectile.alpha < 0)
+            {
+                Projectile.alpha = 0;
+            }
+        }
+    }
+
+    public class ISTG3OutPrism : ModProjectile
+    {
+        private const string ChainTextPath = "Arknights/NPCs/U12/ISTG3OutPrism";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("IACTSTG3TGT");
+            DisplayName.AddTranslation(GameCulture.FromCultureName(GameCulture.CultureName.Chinese), "IACT三阶段瞄准目标");//翻译
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 132;
+            Projectile.height = 132;
+            Projectile.aiStyle = 0;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            if (Main.masterMode)
+            {
+                Projectile.timeLeft = 360;
+            }
+            else if (Main.expertMode)
+            {
+                Projectile.timeLeft = 450;
+            }
+            else
+            {
+                Projectile.timeLeft = 540;
+            }
+            Projectile.alpha = 10;
+            Projectile.damage = 0;
+            Projectile.light = 0.6f;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.scale = 1f;
+        }
+
+        private int timer;
+
+        public int ParentIndex
+        {
+            get => (int)Projectile.ai[0] - 1;
+            set => Projectile.ai[0] = value + 1;
+        }
+
+        public override void AI()
+        {
+            timer++;
+            Player Player = Main.player[Main.myPlayer];
+            NPC parentNPC = Main.npc[ParentIndex];
+            Projectile.Center = 2 * Player.Center - parentNPC.Center;
+            Projectile.rotation = 0.05f * timer;
+            if (Main.masterMode)
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 60 - timer * 6 + 255);
+                if ((timer >= 0 && timer <= 60) || (timer >= 300 && timer <= 360))
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120) + 0.2f;
+                }
+                else
+                {
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 60 - Math.PI / 2) + 1.1f;
+                }
+            }
+            else if (Main.expertMode)
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 75 - timer * 6 + 255);
+                if (timer >= 0 && timer <= 60)
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120) + 0.2f;
+                }
+                else if (timer >= 60 && timer <= 390)
+                {
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 70 - 5 * Math.PI / 14) + 1.1f;
+                }
+                else
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120 + Math.PI / 2) + 0.2f;
+                }
+            }
+            else
+            {
+                Projectile.alpha = (int)(Math.Pow(timer, 2) / 90 - timer * 6 + 255);
+                if (timer >= 0 && timer <= 60)
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120) + 0.2f;
+                }
+                else if (timer >= 60 && timer <= 480)
+                {
+                    Projectile.scale = 0.1f * (float)Math.Sin(timer * Math.PI / 70 - 5 * Math.PI / 14) + 1.1f;
+                }
+                else
+                {
+                    Projectile.scale = (float)Math.Sin(timer * Math.PI / 120 - 3 * Math.PI / 4) + 0.2f;
+                }
+            }
+            if (Projectile.alpha < 0)
+            {
+                Projectile.alpha = 0;
+            }
+        }
+    }
+
+    public class AuragreenPro : ModProjectile
 	{
 		private const string ChainTextPath="Arknights/NPCs/U12/AuragreenPro";
 		public override void SetStaticDefaults()
@@ -1537,11 +2187,11 @@ namespace Arknights.NPCs.U12
 			Projectile.alpha = alphasize;
 		}
 
-		//public override void Kill(int timeLeft)//下一阶段：召唤普通红色伤害箱
-		//{
-		//	var newSource = Projectile.GetSource_FromThis();
-		//	Projectile.NewProjectile(newSource,Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<ExplodeArea>(),(int)Projectile.damage, 0f,  0, 0);
-		//}
+		public override void Kill(int timeLeft)//下一阶段：召唤普通红色伤害箱
+		{
+			var newSource = Projectile.GetSource_FromThis();
+			Projectile.NewProjectile(newSource, Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<ExplodeArea>(), 10, 0f, 0, 0);
+		}
 	}
 
 	public class HitboxredPro : ModProjectile
@@ -1590,11 +2240,11 @@ namespace Arknights.NPCs.U12
 			Projectile.alpha = alphasize;
 		}
 
-		//public override void Kill(int timeLeft)//下一阶段：召唤高阶红色伤害箱
-		//{
-		//	var newSource = Projectile.GetSource_FromThis();
-		//	Projectile.NewProjectile(newSource,Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<ExplodeAreaPro>(),(int)(Projectile.damage), 0f,  0, 0);
-		//}
+		public override void Kill(int timeLeft)//下一阶段：召唤高阶红色伤害箱
+		{
+			var newSource = Projectile.GetSource_FromThis();
+			Projectile.NewProjectile(newSource, Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<ExplodeAreaPro>(), 20, 0f, 0, 0);
+		}
 	}
 
 	public class ExplodeArea : ModProjectile
@@ -2115,11 +2765,11 @@ namespace Arknights.NPCs.U12
 			Projectile.velocity.Y = speedy;
         }
 
-        public override void Kill(int timeLeft)//途中撞上人或者到时间就爆炸
-        {
-            var newSource = Projectile.GetSource_FromThis();
-            Projectile.NewProjectile(newSource, Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<ExplodeArea>(), 10 , 0f, 0, 0);
-        }
+        //public override void Kill(int timeLeft)//途中撞上人或者到时间就爆炸
+        //{
+        //    var newSource = Projectile.GetSource_FromThis();
+        //    Projectile.NewProjectile(newSource, Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<ExplodeArea>(), 10 , 0f, 0, 0);
+        //}
     }
 
     public class misslepro : ModProjectile
@@ -2159,10 +2809,10 @@ namespace Arknights.NPCs.U12
 
         }
 
-        public override void Kill(int timeLeft)//途中撞上人或者到时间就爆炸
-        {
-            var newSource = Projectile.GetSource_FromThis();
-            Projectile.NewProjectile(newSource, Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<ExplodeAreaPro>(), 20, 0f, 0, 0);
-        }
+        //public override void Kill(int timeLeft)//途中撞上人或者到时间就爆炸
+        //{
+        //    var newSource = Projectile.GetSource_FromThis();
+        //    Projectile.NewProjectile(newSource, Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<ExplodeAreaPro>(), 20, 0f, 0, 0);
+        //}
     }
 }
