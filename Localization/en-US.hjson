@@ -1,0 +1,47 @@
+Mods: {
+	Arknights: {
+		Items: {
+			IACTSummon: {
+				DisplayName: Suspicious Remote Control
+				Tooltip:
+					'''
+					Maybe only need a tiny signal , it can call something [c/FF0000:dangerous].
+					Call [c/FF0000:the lost military nuke weapon]
+					[c/FF0000:Only during NIGHT]
+					'''
+			}
+		}
+
+		Projectiles: {
+			AuragreenPro.DisplayName: Green Aura
+			AuraredPro.DisplayName: Red Aura
+			Deathdust.DisplayName: DeathDust
+			ExplodeArea.DisplayName: EXPLODE
+			ExplodeAreaPro.DisplayName: HUGE EXPLODE
+			Hitblockgreen.DisplayName: Green Hitblock
+			HitblockgreenPro.DisplayName: Green Hitblock II
+			Hitblockorange.DisplayName: Orange Hitblock
+			HitblockorangePro.DisplayName: Orange Hitblock II
+			HitboxblueCore.DisplayName: Pre-attack core
+			HitboxblueFrame.DisplayName: Pre-attack frame
+			Hitboxgreen.DisplayName: Green Hitbox
+			HitboxgreenPro.DisplayName: Green Hitbox II
+			Hitboxorange.DisplayName: Orange Hitbox
+			HitboxorangePro.DisplayName: Orange Hitbox II
+			Hitboxred.DisplayName: Red Hitbox
+			HitboxredPro.DisplayName: Red Hitbox II
+			IACTScreenWave.DisplayName: IACTScreenWave
+			ISTG3InCore.DisplayName: IACTSTG3TGT
+			ISTG3InRing.DisplayName: IACTSTG3TGT
+			ISTG3OutPrism.DisplayName: IACTSTG3TGT
+			ISTG3OutRing.DisplayName: IACTSTG3TGT
+			missle.DisplayName: Missle
+			misslepro.DisplayName: Missle II
+		}
+
+		NPCs: {
+			IACT.DisplayName: Imperial Artillery Core Targeteer
+			IACTStage3target.DisplayName: I A C T Stage3target
+		}
+	}
+}
